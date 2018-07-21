@@ -57,6 +57,8 @@ Shader "Custom/TestShader" {
 	// }
 	SubShader {
 		Pass {
+
+			Tags { "LightMode" = "ForwardBase" }
 			CGPROGRAM
 
 			#pragma vertex vert
@@ -81,8 +83,9 @@ Shader "Custom/TestShader" {
 				float3 ambient = 0.2;
 				float3 lightdir = normalize(float3(1.0, 1.0, 1.0));
 				
-				fixed3 diffuse = saturate(dot(worldnormal, lightdir));
-				o.color = diffuse + ambient;
+				//fixed3 diffuse = saturate(dot(worldnormal, lightdir));
+				fixed3 diffuse = 0.5 * dot(worldnormal, lightdir) + 0.5;
+				o.color = 0.6 * diffuse + 0.4 * ambient;
 				// mul(v.normal, )
 				return o;
 			}
