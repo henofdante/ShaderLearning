@@ -1,4 +1,6 @@
-﻿// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
+﻿// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+
+// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
 
 // Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
@@ -64,6 +66,8 @@ Shader "Custom/TestShader" {
 			#pragma vertex vert
 			#pragma fragment frag 
 
+			#include "Lighting.cginc"
+
 			struct a2v {
 				float4 vertex : POSITION;
 				float3 normal : NORMAL;
@@ -80,12 +84,20 @@ Shader "Custom/TestShader" {
 				o.pos = UnityObjectToClipPos(v.vertex);
 				
 				float3 worldnormal = mul(v.normal, unity_WorldToObject);
-				float3 ambient = 0.2;
+				float3 worldpos = mul(unity_ObjectToWorld, v.vertex).xyz;
+				float3 worldlightdir = _WorldSpaceLightPos0.xyz;
+				float3 ambient = 0.4;
 				float3 lightdir = normalize(float3(1.0, 1.0, 1.0));
 				
-				//fixed3 diffuse = saturate(dot(worldnormal, lightdir));
-				fixed3 diffuse = 0.5 * dot(worldnormal, lightdir) + 0.5;
-				o.color = 0.6 * diffuse + 0.4 * ambient;
+				// diffuse in half-lambert
+				fixed3 diffuse = 0.5 * dot(worldnormal, worldlightdir) + 0.5;
+
+				// specular
+				
+				fixed3 reflectdir = normalize(reflect(-worldlightdir, worldnormal));
+				fixed3 viewdir = normalize(_WorldSpaceCameraPos.xyz - worldpos);
+				fixed3 specular = pow(saturate(dot(reflectdir, viewdir)), 7);
+				o.color = 0.1 * diffuse + 0.1 * ambient + 1.0 * specular;
 				// mul(v.normal, )
 				return o;
 			}
