@@ -98,7 +98,6 @@ Shader "Custom/TestShader" {
 				fixed3 viewdir = normalize(_WorldSpaceCameraPos.xyz - worldpos);
 				fixed3 specular = pow(saturate(dot(reflectdir, viewdir)), 7);
 				o.color = 0.1 * diffuse + 0.1 * ambient + 1.0 * specular;
-				// mul(v.normal, )
 				return o;
 			}
 
