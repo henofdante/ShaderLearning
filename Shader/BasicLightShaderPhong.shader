@@ -50,7 +50,7 @@ Shader "Custom/BasicLightShaderPhong" {
                     fixed3 diffuse = _LightColor0.rgb * _Diffuse.rgb * saturate(dot(frag.worldNormal, worldLight));
                     // specular Phong模型
                     float3 reflexDir = normalize(reflect(-worldLight, frag.worldNormal));
-                    float3 viewDir = normalize(_WorldSpaceCameraPos - UnityObjectToWorldDir(frag.worldPos.xyz)).xyz;
+                    float3 viewDir = normalize(_WorldSpaceCameraPos - (frag.worldPos.xyz)).xyz;
                     fixed3 specular = _LightColor0.rgb * _Specular.rgb * pow(saturate(dot(reflexDir, viewDir)), _Gloss);
 
                     return fixed4(ambient + diffuse + specular, 1.0);
