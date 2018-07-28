@@ -19,7 +19,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs: []
     m_Floats:
-    - _Gloss: 11.37
+    - _Gloss: 20
     m_Colors:
-    - _Diffuse: {r: 0.7921569, g: 0.7921569, b: 0.7764706, a: 1}
-    - _Specular: {r: 1, g: 1, b: 0.972549, a: 1}
+    - _Diffuse: {r: 1, g: 1, b: 1, a: 1}
+    - _Specular: {r: 1, g: 1, b: 1, a: 1}
