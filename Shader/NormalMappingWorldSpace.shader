@@ -70,7 +70,9 @@ Shader "Custom/NormalMappingWorldSpace" {
                 }
 
                 fixed3 frag(v2f frag) : SV_TARGET {
+                    // 获取贴图颜色
                     fixed3 albedo = tex2D(_MainTex, frag.uv.xy) * _Color;
+                    // ambient
                     fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT;
                     // 光线向量
                     float3 worldLight = normalize(UnityWorldSpaceLightDir(frag.worldPos));
